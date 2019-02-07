@@ -3,13 +3,7 @@ const express = require('express');
 const app = express();
 
 app.get('/tasks', function (request, response) {
-
-  const username = request.query.username;
-
-  const someTasks = {
-    message: username + "Lets get on with these tasks!",
-
-  taskList: [
+  const someTasks = [
         {
             id: 1,
             description:"Buy a bottle of milk",
@@ -25,8 +19,8 @@ app.get('/tasks', function (request, response) {
           description: "Take bins out",
           completed: false
         }]
-  };
-  response.json(taskList);
+  
+  response.json(someTasks);
 });
 
 app.delete('/tasks/:taskId', function (request, response) {
@@ -57,5 +51,13 @@ app.delete('/tasks/:taskId', function (request, response) {
     response.json(someJson);
   });
     
-  
+  app.put('/tasks', function (request, response) {
+    const UpdateTask = request.body.UpdateTask
+
+    const someJson = {
+      message : "Well done. Task Completed"
+    };
+  response.json(someJson);
+});
+
 module.exports.handler = serverless(app);
