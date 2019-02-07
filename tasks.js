@@ -48,16 +48,14 @@ app.delete('/tasks/:taskId', function (request, response) {
  
   });
 
-  app.post('/tasks/:newTask', function (request, response) {
-    const taskAdded = [ {
-      id : Number,
-      description: " ",
-      completed: false,
-  }]
-  let someResponse = {
-    message: "You issued a new task" + taskAdded
+  app.post('/tasks', function (request, response) {
+    const taskAdded = request.body.taskAdded;
+    
+  const someJson = {
+    message: " Task has been added to the list" 
   };
-  response.json(someResponse); 
-
+    response.json(someJson);
   });
+    
+  
 module.exports.handler = serverless(app);
