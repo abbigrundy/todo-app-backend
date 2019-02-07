@@ -4,8 +4,13 @@ const app = express();
 
 app.get('/tasks', function (request, response) {
 
-  const someTasks = [
-  {
+  const username = request.query.username;
+
+  const someTasks = {
+    message: username + "Lets get on with these tasks!",
+
+  taskList: [
+        {
             id: 1,
             description:"Buy a bottle of milk",
             completed: false
@@ -19,9 +24,9 @@ app.get('/tasks', function (request, response) {
           id:3,
           description: "Take bins out",
           completed: false
-  }
-];
-  response.json(someTasks);
+        }]
+  };
+  response.json(taskList);
 });
 
 app.delete('/tasks/:taskId', function (request, response) {

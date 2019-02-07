@@ -18,6 +18,6 @@ functions:
           method: delete
           cors: true
       - http:
-          path: tasks/newTask
+          path: tasks
           method: post
           cors : true
