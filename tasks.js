@@ -1,28 +1,24 @@
 const serverless = require('serverless-http');
 const express = require('express');
 const app = express();
+app.use(express.json());
+const databaseService = require('./databaseservice');
 
 app.get('/tasks', function (request, response) {
-  const someTasks = [
-        {
-            id: 1,
-            description:"Buy a bottle of milk",
-            completed: false
-        },
-        {
-          id:2,
-          desription: "Take the dog for a walk",
-          completed: false
-        },
-        {
-          id:3,
-          description: "Take bins out",
-          completed: false
-        }]
   
-  response.json(someTasks);
-});
+    databaseService.getTasks()
+    .then(function(results) {
+      // We got the tasks OK
+      response.json (results);
+    })
 
+    .catch(function(error){
+      //Something weent wrong when getting the tasks.
+      response.status(500); //.json(error); 
+      response.json(error);
+    });
+    
+  })
 app.delete('/tasks/:taskId', function (request, response) {
 
   const taskIdToBeDeleted =  request.params.taskId;
@@ -43,21 +39,33 @@ app.delete('/tasks/:taskId', function (request, response) {
   });
 
   app.post('/tasks', function (request, response) {
-    const taskAdded = request.body.taskAdded;
-    
-  const someJson = {
-    message: " Task has been added to the list" 
-  };
-    response.json(someJson);
-  });
+   
+    const taskDescription = request.body.taskDescription;
+    databaseService.saveTask(taskDescription).then(function(results){
+      response.json(results);
+    })
+    .catch(function(error){
+      response.status(500);
+      response.json(error);
+    });
+    })
     
   app.put('/tasks', function (request, response) {
-    const UpdateTask = request.body.UpdateTask
+    const Completed = request.params.taskId;
+    databaseService.updateTask(Completed).then(function(results){
+      response.json(results);
+    })
 
-    const someJson = {
-      message : "Well done. Task Completed"
-    };
-  response.json(someJson);
-});
+    .catch(function(error){
+      response.status(500);
+      response.json(error);
+
+      someResponse = {
+        message: "Task:" + taskId + "Task Completed"
+      };
+
+    });
+})
+
 
 module.exports.handler = serverless(app);
