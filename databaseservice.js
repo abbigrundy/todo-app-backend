@@ -55,28 +55,27 @@ function saveTask(taskDescription){
     });
 }
 
-function updateTask(Completed){
+function updateTask(){
     const connection = getDatabaseConnection();
 
     return new Promise (function(resolve,reject){
         const putData = {
             Description: taskDescription,
-            Completed: 1,
+            Completed: true,
             UserID: 1
         };
-    
-    connection.query(' UPDATE TASKS SET Completed 1  ', putData, function (error,results,fields){
+           
+    connection.query(' UPDATE TASKS SET Completed = 1 WHERE TaskID = 87  ' , putData(updateTask), function (error,results,fields){
             if (error) {
                 connection.destroy();
                 return reject(error);
-                
             }
             else {
                 connection.end();
                 return resolve(results);
             }
-        });
     });
+})
 }
 module.exports = {
     getTasks,
