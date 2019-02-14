@@ -50,7 +50,7 @@ app.delete('/tasks/:taskId', function (request, response) {
     });
     })
     
-  app.put('/tasks', function (request, response) {
+  app.put('/tasks/:taskId', function (request, response) {
     const Completed = request.params.taskId;
     databaseService.updateTask(Completed).then(function(results){
       response.json(results);

@@ -59,13 +59,7 @@ function updateTask(TaskID){
     const connection = getDatabaseConnection();
 
     return new Promise (function(resolve,reject){
-        const TaskID = {
-            
-            Description: taskDescription,
-            Completed: true,
-            UserID: 1
-        };
-           
+      
     connection.query(' UPDATE TASKS SET Completed = true WHERE TaskID = ?  ' , [TaskID] , function (error,results,fields){
         if (error) {
             connection.destroy();
