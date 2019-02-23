@@ -20,8 +20,10 @@ function getTasks() {
                 return reject(error); // reject the promise
             } 
             else { 
-                connection.end(); // still end the connection and return the result.
-                return resolve(results);
+                connection.end(function (){
+                    return resolve(results);
+                }); // still end the connection and return the result.
+               
             }
         });
     });
@@ -46,9 +48,10 @@ function saveTask(taskDescription){
                 
             }
             else {
-                connection.end();
-                return resolve(results);
-            }
+                connection.end(function (){
+                    return resolve(results);
+            });
+        }
           
         });
 
